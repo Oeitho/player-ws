@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+    ws:
+        build:
+            context: .
+            dockerfile: src/main/docker/Dockerfile.jvm
+        depends_on:
+            - infinispan
+        entrypoint: /bin/sh -c "echo 'sleep for 9 seconds' && sleep 9s && ./application \"-Dquarkus.http.host=0.0.0.0\""
+    infinispan:
+        image: infinispan/server:11.0.3.Final
+        environment:
+            USER: admin
+            PASS: admin
